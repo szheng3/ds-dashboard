@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "target": "es5",
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "types": [
+      "react",
+      "antd"
+    ],
+    "module": "es6",
+    "moduleResolution": "node",
+    "jsx": "react",
+//    "baseUrl": "./src/",
+//    "paths": {
+//      "components": ["./src/components"]
+//    },
+    "baseUrl":".",
+    "paths": {
+      "@/*" :["./src/*"]
+    },
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "noStrictGenericChecks": true
+  },
+  "exclude": [
+    //      "src/pages/**"
+    "node_modules"
+  ],
+  "include": [
+    "src/**/*",
+    "typings.d.ts"
+  ]
+}
