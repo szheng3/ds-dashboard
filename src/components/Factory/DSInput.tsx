@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { Input } from 'antd';
-import DSBraftEditor from '../Editor/Editor';
-import DSUpload from '../Upload/DSUpload';
-
-import { DSBraftEditorProps } from '../Editor/Editor';
 import { InputProps } from 'antd/lib/input/Input';
 import { UploadProps } from 'antd/lib/upload';
+import DSBraftEditor, { DSBraftEditorProps } from '../Editor/Editor';
+import DSUpload from '../Upload/DSUpload';
 
 export interface IDSInputProps {
   type: 'editor' | 'upload' | 'input';
@@ -15,28 +13,28 @@ export interface IDSInputProps {
 }
 
 interface DSInputProps extends InputProps {
-
   placeholder?: string
 }
 
-const DSInput: React.SFC<IDSInputProps> = ({ type, inputProps, ...rest }: any) => {
+const DSInput: React.SFC<IDSInputProps> = ({ type, inputProps, ...rest }) => {
   switch (type) {
     case 'editor':
       return (
+
         <DSBraftEditor
-          {...inputProps}
+          {...inputProps as DSBraftEditorProps}
         />
       );
     case 'upload':
       return (
         <DSUpload
-          {...inputProps}
+          {...inputProps as UploadProps}
         />
       );
     case 'input':
       return (
         <Input
-          {...inputProps}
+          {...inputProps as InputProps}
           {...rest}
 
         />
