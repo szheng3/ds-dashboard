@@ -133,4 +133,7 @@ export default {
       pathRewrite: {'^/': ''},
     },
   },
+  // history: 'hash',
+  // exportStatic: true,
+
 };
