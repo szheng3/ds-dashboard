@@ -4,6 +4,7 @@ import { fakeAccountLogin, getFakeCaptcha } from '@/services/api';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { reloadAuthorized } from '@/utils/Authorized';
+import token from '@/utils/token';
 
 export default {
   namespace: 'login',
@@ -13,7 +14,7 @@ export default {
   },
 
   effects: {
-    *login({ payload }, { call, put }) {
+    * login({ payload }, { call, put }) {
       const response = yield call(fakeAccountLogin, payload);
       yield put({
         type: 'changeLoginStatus',
@@ -21,6 +22,9 @@ export default {
       });
       // Login successfully
       if (response.status === 'ok') {
+
+        token.save(response.access_token);
+
         reloadAuthorized();
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
@@ -41,11 +45,11 @@ export default {
       }
     },
 
-    *getCaptcha({ payload }, { call }) {
+    * getCaptcha({ payload }, { call }) {
       yield call(getFakeCaptcha, payload);
     },
 
-    *logout(_, { put }) {
+    * logout(_, { put }) {
       yield put({
         type: 'changeLoginStatus',
         payload: {
@@ -60,7 +64,7 @@ export default {
           search: stringify({
             redirect: window.location.href,
           }),
-        })
+        }),
       );
     },
   },

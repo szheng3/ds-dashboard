@@ -3,6 +3,8 @@ import { notification } from 'antd';
 import router from 'umi/router';
 import hash from 'hash.js';
 import { isAntdPro } from './utils';
+import token from './token';
+
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -21,6 +23,11 @@ const codeMessage = {
   503: '服务不可用，服务器暂时过载或维护。',
   504: '网关超时。',
 };
+
+export function buildAuthorization() {
+  const tokenVal = token.get();
+  return tokenVal ? `Bearer ${tokenVal}` : undefined;
+}
 
 const checkStatus = response => {
   if (response.status >= 200 && response.status < 300) {
@@ -80,6 +87,7 @@ export default function request(
     .digest('hex');
 
   const defaultOptions = {
+    Authorization: buildAuthorization(),
     credentials: 'include',
   };
   const newOptions = { ...defaultOptions, ...options };
