@@ -5,7 +5,6 @@ import hash from 'hash.js';
 import { isAntdPro } from './utils';
 import token from './token';
 
-
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -52,13 +51,10 @@ const cachedSave = (response, hashcode) => {
   const contentType = response.headers.get('Content-Type');
   if (contentType && contentType.match(/application\/json/i)) {
     // All data is saved as text
-    response
-      .clone()
-      .text()
-      .then(content => {
-        sessionStorage.setItem(hashcode, content);
-        sessionStorage.setItem(`${hashcode}:timestamp`, Date.now());
-      });
+    response.clone().text().then(content => {
+      sessionStorage.setItem(hashcode, content);
+      sessionStorage.setItem(`${hashcode}:timestamp`, Date.now());
+    });
   }
   return response;
 };
@@ -74,20 +70,16 @@ export default function request(
   url,
   options = {
     expirys: isAntdPro(),
-  }
+  },
 ) {
   /**
    * Produce fingerprints based on url and parameters
    * Maybe url has the same parameters
    */
   const fingerprint = url + (options.body ? JSON.stringify(options.body) : '');
-  const hashcode = hash
-    .sha256()
-    .update(fingerprint)
-    .digest('hex');
+  const hashcode = hash.sha256().update(fingerprint).digest('hex');
 
   const defaultOptions = {
-    Authorization: buildAuthorization(),
     credentials: 'include',
   };
   const newOptions = { ...defaultOptions, ...options };
@@ -111,6 +103,10 @@ export default function request(
       };
     }
   }
+  newOptions.headers = {
+    Authorization: buildAuthorization(),
+    ...newOptions.headers,
+  };
 
   const expirys = options.expirys || 60;
   // options.expirys !== false, return the cache,
@@ -127,8 +123,7 @@ export default function request(
       sessionStorage.removeItem(`${hashcode}:timestamp`);
     }
   }
-  return fetch(url, newOptions)
-    .then(checkStatus)
+  return fetch(url, newOptions).then(checkStatus)
   // .then(response => cachedSave(response, hashcode))
     .then(response => {
       // DELETE and 204 do not return data by default
@@ -137,9 +132,8 @@ export default function request(
         return response.text();
       }
       return response.json();
-    })
-    .catch(e => {
-      const status = e.name;
+    }).catch(e => {
+      // const status = e.name;
       // if (status === 401) {
       //   // @HACK
       //   /* eslint-disable no-underscore-dangle */
