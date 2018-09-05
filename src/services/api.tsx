@@ -104,9 +104,15 @@ export async function updateFakeList(params) {
 }
 
 export async function fakeAccountLogin(params) {
-  return request('/api/login/account', {
+  const client = `Basic ${btoa('trusted-app:secret')}`;
+
+  return request(`/oauth/token?${params}`, {
     method: 'POST',
-    body: params,
+    // body: JSON.stringify({ 'user': {
+    //   'email' : email,
+    //   'password' : password,
+    // }}),
+    headers: { Authorization: client },
   });
 }
 

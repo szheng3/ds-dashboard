@@ -129,7 +129,7 @@ export default function request(
   }
   return fetch(url, newOptions)
     .then(checkStatus)
-    .then(response => cachedSave(response, hashcode))
+  // .then(response => cachedSave(response, hashcode))
     .then(response => {
       // DELETE and 204 do not return data by default
       // using .json will report an error.
@@ -140,25 +140,25 @@ export default function request(
     })
     .catch(e => {
       const status = e.name;
-      if (status === 401) {
-        // @HACK
-        /* eslint-disable no-underscore-dangle */
-        window.g_app._store.dispatch({
-          type: 'login/logout',
-        });
-        return;
-      }
-      // environment should not be used
-      if (status === 403) {
-        router.push('/exception/403');
-        return;
-      }
-      if (status <= 504 && status >= 500) {
-        router.push('/exception/500');
-        return;
-      }
-      if (status >= 404 && status < 422) {
-        router.push('/exception/404');
-      }
+      // if (status === 401) {
+      //   // @HACK
+      //   /* eslint-disable no-underscore-dangle */
+      //   window.g_app._store.dispatch({
+      //     type: 'login/logout',
+      //   });
+      //   return;
+      // }
+      // // environment should not be used
+      // if (status === 403) {
+      //   router.push('/exception/403');
+      //   return;
+      // }
+      // if (status <= 504 && status >= 500) {
+      //   router.push('/exception/500');
+      //   return;
+      // }
+      // if (status >= 404 && status < 422) {
+      //   router.push('/exception/404');
+      // }
     });
 }

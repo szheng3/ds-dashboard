@@ -15,14 +15,18 @@ export default {
 
   effects: {
     * login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
+      console.log(payload);
+      const { userName, password } = payload;
+
+      const urlString = `password=${password}&username=${userName}&grant_type=password`;
+
+      const response = yield call(fakeAccountLogin, urlString);
       yield put({
         type: 'changeLoginStatus',
         payload: response,
       });
       // Login successfully
-      if (response.status === 'ok') {
-
+      if (response) {
         token.save(response.access_token);
 
         reloadAuthorized();
