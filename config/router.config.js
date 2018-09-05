@@ -32,6 +32,11 @@ export default [
         icon: 'dashboard',
         routes: [
           {
+            path: '/dashboard',
+            redirect: '/dashboard/analysis',
+
+          },
+          {
             path: '/dashboard/analysis',
             name: 'analysis',
             component: './Dashboard/Analysis',

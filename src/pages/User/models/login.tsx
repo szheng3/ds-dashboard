@@ -54,6 +54,7 @@ export default {
     },
 
     * logout(_, { put }) {
+      token.remove();
       yield put({
         type: 'changeLoginStatus',
         payload: {
