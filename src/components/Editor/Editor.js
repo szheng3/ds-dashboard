@@ -5,6 +5,16 @@ import CustomAtomic from './CustomAtomic';
 import { message } from 'antd';
 
 export default class DSBraftEditor extends React.Component {
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.initialContent !== nextProps.initialContent) {
+
+      this.editorInstance.setContent(nextProps.initialContent);
+
+    }
+
+  }
+
   preview = () => {
     if (window.previewWindow) {
       window.previewWindow.close();
@@ -91,14 +101,7 @@ export default class DSBraftEditor extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.initialContent !== nextProps.initialContent) {
 
-      this.editorInstance.setContent(nextProps.initialContent);
-
-    }
-
-  }
 
   buildPreviewHtml() {
 
