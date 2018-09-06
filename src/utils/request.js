@@ -133,7 +133,7 @@ export default function request(
       }
       return response.json();
     }).catch(e => {
-      // const status = e.name;
+      const status = e.name;
       // if (status === 401) {
       //   // @HACK
       //   /* eslint-disable no-underscore-dangle */
