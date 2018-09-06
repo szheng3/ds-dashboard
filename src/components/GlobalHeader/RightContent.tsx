@@ -6,8 +6,10 @@ import groupBy from 'lodash/groupBy';
 import NoticeIcon from '../NoticeIcon';
 import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
+import { currentUserResponse, UserModel } from '@/response/currentUser';
+import _ from 'lodash';
 
-export default class GlobalHeaderRight extends PureComponent {
+export default class GlobalHeaderRight extends PureComponent<any, any> {
   getNoticeData() {
     const { notices = [] } = this.props;
     if (notices.length === 0) {
@@ -57,6 +59,8 @@ export default class GlobalHeaderRight extends PureComponent {
       onNoticeClear,
       theme,
     } = this.props;
+    const { nickname, avatar }: UserModel = _.get(currentUser, 'userModel', {});
+    // const{}=userModel;
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
         <Menu.Item key="userCenter">
@@ -85,68 +89,68 @@ export default class GlobalHeaderRight extends PureComponent {
     }
     return (
       <div className={className}>
-        <HeaderSearch
-          className={`${styles.action} ${styles.search}`}
-          placeholder="站内搜索"
-          dataSource={['搜索提示一', '搜索提示二', '搜索提示三']}
-          onSearch={value => {
-            console.log('input', value); // eslint-disable-line
-          }}
-          onPressEnter={value => {
-            console.log('enter', value); // eslint-disable-line
-          }}
-        />
-        <Tooltip title="使用文档">
-          <a
-            target="_blank"
-            href="https://pro.ant.design/docs/getting-started"
-            rel="noopener noreferrer"
-            className={styles.action}
-            title="使用文档"
-          >
-            <Icon type="question-circle-o" />
-          </a>
-        </Tooltip>
-        <NoticeIcon
-          className={styles.action}
-          count={currentUser.notifyCount}
-          onItemClick={(item, tabProps) => {
-            console.log(item, tabProps); // eslint-disable-line
-          }}
-          onClear={onNoticeClear}
-          onPopupVisibleChange={onNoticeVisibleChange}
-          loading={fetchingNotices}
-          popupAlign={{ offset: [20, -16] }}
-        >
-          <NoticeIcon.Tab
-            list={noticeData['通知']}
-            title="通知"
-            emptyText="你已查看所有通知"
-            emptyImage="https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg"
-          />
-          <NoticeIcon.Tab
-            list={noticeData['消息']}
-            title="消息"
-            emptyText="您已读完所有消息"
-            emptyImage="https://gw.alipayobjects.com/zos/rmsportal/sAuJeJzSKbUmHfBQRzmZ.svg"
-          />
-          <NoticeIcon.Tab
-            list={noticeData['待办']}
-            title="待办"
-            emptyText="你已完成所有待办"
-            emptyImage="https://gw.alipayobjects.com/zos/rmsportal/HsIsxMZiWKrNUavQUXqx.svg"
-          />
-        </NoticeIcon>
-        {currentUser.name ? (
+        {/*<HeaderSearch*/}
+        {/*className={`${styles.action} ${styles.search}`}*/}
+        {/*placeholder="站内搜索"*/}
+        {/*dataSource={['搜索提示一', '搜索提示二', '搜索提示三']}*/}
+        {/*onSearch={value => {*/}
+        {/*console.log('input', value); // eslint-disable-line*/}
+        {/*}}*/}
+        {/*onPressEnter={value => {*/}
+        {/*console.log('enter', value); // eslint-disable-line*/}
+        {/*}}*/}
+        {/*/>*/}
+        {/*<Tooltip title="使用文档">*/}
+        {/*<a*/}
+        {/*target="_blank"*/}
+        {/*href="https://pro.ant.design/docs/getting-started"*/}
+        {/*rel="noopener noreferrer"*/}
+        {/*className={styles.action}*/}
+        {/*title="使用文档"*/}
+        {/*>*/}
+        {/*<Icon type="question-circle-o" />*/}
+        {/*</a>*/}
+        {/*</Tooltip>*/}
+        {/*<NoticeIcon*/}
+        {/*className={styles.action}*/}
+        {/*count={currentUser.notifyCount}*/}
+        {/*onItemClick={(item, tabProps) => {*/}
+        {/*console.log(item, tabProps); // eslint-disable-line*/}
+        {/*}}*/}
+        {/*onClear={onNoticeClear}*/}
+        {/*onPopupVisibleChange={onNoticeVisibleChange}*/}
+        {/*loading={fetchingNotices}*/}
+        {/*popupAlign={{ offset: [20, -16] }}*/}
+        {/*>*/}
+        {/*<NoticeIcon.Tab*/}
+        {/*list={noticeData['通知']}*/}
+        {/*title="通知"*/}
+        {/*emptyText="你已查看所有通知"*/}
+        {/*emptyImage="https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg"*/}
+        {/*/>*/}
+        {/*<NoticeIcon.Tab*/}
+        {/*list={noticeData['消息']}*/}
+        {/*title="消息"*/}
+        {/*emptyText="您已读完所有消息"*/}
+        {/*emptyImage="https://gw.alipayobjects.com/zos/rmsportal/sAuJeJzSKbUmHfBQRzmZ.svg"*/}
+        {/*/>*/}
+        {/*<NoticeIcon.Tab*/}
+        {/*list={noticeData['待办']}*/}
+        {/*title="待办"*/}
+        {/*emptyText="你已完成所有待办"*/}
+        {/*emptyImage="https://gw.alipayobjects.com/zos/rmsportal/HsIsxMZiWKrNUavQUXqx.svg"*/}
+        {/*/>*/}
+        {/*</NoticeIcon>*/}
+        {nickname ? (
           <Dropdown overlay={menu}>
             <span className={`${styles.action} ${styles.account}`}>
               <Avatar
                 size="small"
                 className={styles.avatar}
-                src={currentUser.avatar}
+                src={avatar}
                 alt="avatar"
               />
-              <span className={styles.name}>{currentUser.name}</span>
+              <span className={styles.name}>{nickname}</span>
             </span>
           </Dropdown>
         ) : (
