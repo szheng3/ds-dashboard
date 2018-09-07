@@ -115,6 +115,7 @@ export default {
   //   // containers: path.resolve(__dirname, 'src/containers/'),
   //   // response: path.resolve(__dirname, 'src/response/'),
   // },
+  'exportStatic': {},
 
 
 
