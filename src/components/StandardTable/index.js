@@ -1,5 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import { Table, Alert } from 'antd';
+import _ from 'lodash';
 import styles from './index.less';
 
 function initTotalList(columns) {
@@ -64,11 +65,11 @@ class StandardTable extends PureComponent {
   render() {
     const { selectedRowKeys, needTotalList } = this.state;
     const {
-      data: { list, pagination },
       loading,
       columns,
       rowKey,
     } = this.props;
+    const { list, pagination } = _.get(this.props, 'data', {});
 
     const paginationProps = {
       showSizeChanger: true,
