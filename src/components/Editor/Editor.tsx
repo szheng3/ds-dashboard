@@ -11,7 +11,6 @@ export interface DSBraftEditorProps {
   url: string;
   headers?: object;
   htmlContent: string;
-  initialContent: string
 
   onHTMLChange(htmlContent): void;
 

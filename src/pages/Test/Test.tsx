@@ -7,6 +7,8 @@ import { CurrentUserProps, UserModel } from '@/models/user';
 import _ from 'lodash';
 import DSForm, { IDSFormProps } from '@/components/FormTemplate/DSForm';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
+import { EditorState } from 'braft-editor';
+
 
 enum MethodType {
   initialName,
@@ -116,7 +118,6 @@ export default class Test extends React.Component<IUserProfileProps, any> {
             type: 'editor',
             inputProps: {
               htmlContent: '',
-              initialContent: '',
               url: '/api/uploadImage',
               headers: { Authorization: buildAuthorization() },
               onHTMLChange: (htmlContent) => {
@@ -179,7 +180,8 @@ export default class Test extends React.Component<IUserProfileProps, any> {
         this.setState(state => {
           state.form.inputs.map((input) => {
             if (input.input.type === 'editor') {
-              input.input.inputProps.initialContent = nextState;
+              input.input.inputProps.htmlContent = EditorState.createFrom(
+                nextState);
             }
             return input;
           });
@@ -288,6 +290,7 @@ export default class Test extends React.Component<IUserProfileProps, any> {
     }
 
   }
+
 
   UNSAFE_componentWillReceiveProps(nextProps: IUserProfileProps) {
     const { avatar: thisAvatar, details: thisDetails, nickname: thisNickName }: UserModel = _.get(
