@@ -19,7 +19,7 @@ const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
 @connect(({ logs, loading }) => ({
   logs,
-  loading: loading.effects['logs/fetchLogs'],
+  loading: loading.models.logs,
 }))
 export default class Logs extends Component<IDSProps, any> {
 
@@ -31,7 +31,7 @@ export default class Logs extends Component<IDSProps, any> {
   };
   columns = [
     {
-      title: 'os',
+      title: 'OS',
       dataIndex: 'os',
     },
     {
@@ -150,7 +150,7 @@ export default class Logs extends Component<IDSProps, any> {
       return newObj;
     }, {});
 
-    const params = {
+    const params: any = {
       // currentPage: pagination.current,
       limit: pagination.pageSize,
       pageNum: pagination.current,
@@ -159,8 +159,9 @@ export default class Logs extends Component<IDSProps, any> {
       ...filters,
     };
     if (sorter.field) {
-      // params.sorter = `${sorter.field}_${sorter.order}`;
+      params.sorter = `${sorter.field}_${sorter.order}`;
     }
+    console.log(params);
     this.apiAction(params, ActionType.FETCH);
 
   };
@@ -189,17 +190,6 @@ export default class Logs extends Component<IDSProps, any> {
     return (
       <PageHeaderWrapper title={'日志'}>
         <Card>
-          {/*<List*/}
-          {/*size="large"*/}
-          {/*rowKey="id"*/}
-          {/*loading={loading}*/}
-          {/*pagination={paginationProps}*/}
-          {/*dataSource={list}*/}
-          {/*renderItem={({ip}:DSList) => (*/}
-          {/*<div>{ip}</div>*/}
-          {/*)}*/}
-          {/*/>*/}
-
           <StandardTable
             selectedRows={selectedRows}
             loading={loading}
