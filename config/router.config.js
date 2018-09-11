@@ -59,9 +59,14 @@ export default [
         icon: 'dashboard',
         routes: [
           {
-            path: '/test/test',
+            path: 'test',
             name: 'test',
             component: './Test/Test.tsx',
+          },
+          {
+            path: 'logs',
+            name: 'log',
+            component: './Logs/Logs.tsx',
           },
           // {
           //   path: '/dashboard/monitor',

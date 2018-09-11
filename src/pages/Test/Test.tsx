@@ -8,7 +8,9 @@ import _ from 'lodash';
 import DSForm, { IDSFormProps } from '@/components/FormTemplate/DSForm';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { EditorState } from 'braft-editor';
-
+import PageHeaderWrapper, {
+  IPageHeaderWrapperProps,
+} from '@/components/PageHeaderWrapper';
 
 enum MethodType {
   initialName,
@@ -29,7 +31,7 @@ interface IUserProfileProps {
 }
 
 interface IUserProfileState {
-  layout: any;
+  layout: IPageHeaderWrapperProps;
   form?: IDSFormProps;
 }
 
@@ -45,16 +47,6 @@ export default class Test extends React.Component<IUserProfileProps, any> {
     layout: {
       title: '用户详情',
       content: '我的详情资料。',
-      breadcrumbList: [
-        {
-          title: '首页',
-          href: '/dashboard',
-        },
-        {
-          title: '用户详情',
-          href: 'userProfile',
-        },
-      ],
     },
     form: {
       form: this.props.form,
@@ -291,7 +283,6 @@ export default class Test extends React.Component<IUserProfileProps, any> {
 
   }
 
-
   UNSAFE_componentWillReceiveProps(nextProps: IUserProfileProps) {
     const { avatar: thisAvatar, details: thisDetails, nickname: thisNickName }: UserModel = _.get(
       this.props,
@@ -326,8 +317,9 @@ export default class Test extends React.Component<IUserProfileProps, any> {
     const { layout, form } = this.state;
 
     return (
+      <PageHeaderWrapper {...layout} >
 
-      <div {...layout}>
+        {/*<div {...layout}>*/}
         <Spin spinning={loading}>
 
 
@@ -346,7 +338,8 @@ export default class Test extends React.Component<IUserProfileProps, any> {
 
 
         </Spin>
-      </div>
+        {/*</div>*/}
+      </PageHeaderWrapper>
     );
   }
 }
