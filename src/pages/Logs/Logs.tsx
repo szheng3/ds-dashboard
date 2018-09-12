@@ -159,9 +159,9 @@ export default class Logs extends Component<IDSProps, any> {
       ...filters,
     };
     if (sorter.field) {
-      params.sorter = `${sorter.field}_${sorter.order}`;
+      const orderBy = sorter.order === 'ascend' ? 'ASC' : 'DESC';
+      params.orderBy = `${sorter.field} ${orderBy}`;
     }
-    console.log(params);
     this.apiAction(params, ActionType.FETCH);
 
   };
