@@ -16,12 +16,14 @@ export default {
 
   effects: {
     fetchLogs: [
-      function* ({ payload: { pageNum, limit, orderBy } }, { call, put }) {
+      function* (
+        { payload: { pageNum, limit, orderBy, method } }, { call, put }) {
 
         const params = {
           pageNum: pageNum ? `pageNum=${pageNum}` : pageNum,
           limit: limit ? `limit=${limit}` : limit,
           orderBy: orderBy ? `orderBy=${orderBy}` : orderBy,
+          method: method ? `method=${method}` : method,
         };
         // @ts-ignore
         const urlString = Object.values(params).filter(url => url).join('&');

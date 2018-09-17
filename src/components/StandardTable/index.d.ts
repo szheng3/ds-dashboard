@@ -8,5 +8,5 @@ export interface IStandardTableProps {
   // hideCheckAll?: boolean;
 }
 
-export default class StandardTable extends React.Component<IStandardTableProps, any> {
+export default class StandardTable extends React.Component<any, any> {
 }

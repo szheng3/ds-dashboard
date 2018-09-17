@@ -54,13 +54,13 @@ export default [
         ],
       },
       {
-        path: '/test',
-        name: 'test',
-        icon: 'dashboard',
+        path: '/monitor',
+        name: 'monitor',
+        icon: 'snippets',
         routes: [
           {
-            path: 'test',
-            name: 'test',
+            path: 'form',
+            name: 'form',
             component: './Test/Test.tsx',
           },
           {

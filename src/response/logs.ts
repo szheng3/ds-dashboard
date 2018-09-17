@@ -24,11 +24,17 @@ export interface DSlog {
 export interface DSList {
   id: number;
   ip: string;
-  uid?: number;
+  uid: number;
   url: string;
   method: string;
   duration: string;
   date: string;
   os: string;
   brower: string;
+  country: string;
+  subdivision: string;
+  city: string;
+  latitude: string;
+  longitude: string;
+  statusCode: string;
 }
