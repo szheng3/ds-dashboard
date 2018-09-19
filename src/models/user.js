@@ -25,7 +25,13 @@ export default {
           type: 'saveCurrentUser',
           payload: response,
         });
-        setAuthority(response.userModel.role);
+        yield put({
+          type: 'login/changeLoginStatus',
+          payload: {
+            status: true,
+            currentAuthority: response.userModel.role,
+          },
+        });
         reloadAuthorized();
       }
 
