@@ -28,8 +28,10 @@ export default {
       // Login successfully
       if (response) {
         token.save(response.access_token);
+        // setAuthority(["ROLE_ADMIN"]);
+        yield put({ type: 'user/fetchCurrent' });
 
-        reloadAuthorized();
+        // reloadAuthorized();
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         let { redirect } = params;
@@ -59,7 +61,7 @@ export default {
         type: 'changeLoginStatus',
         payload: {
           status: false,
-          currentAuthority: 'guest',
+          currentAuthority: ['ROLE_ADMIN', 'ROLE_USER'],
         },
       });
       reloadAuthorized();

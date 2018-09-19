@@ -1,6 +1,7 @@
 // use localStorage to store the authority info, which might be sent from server in actual project.
 export function getAuthority() {
-  // return localStorage.getItem('antd-pro-authority') || ['admin', 'user'];
+  // console.log(localStorage.getItem('antd-pro-authority'));
+  // return ["ROLE_ADMIN"] ;
   let authority = localStorage.getItem('antd-pro-authority');
   if (authority) {
     if (authority.includes('[')) {
@@ -9,8 +10,9 @@ export function getAuthority() {
       authority = [authority];
     }
   } else {
-    authority = ['admin'];
+    authority = ['ROLE_ADMIN', 'ROLE_USER'];
   }
+  console.log(authority);
   return authority;
 }
 

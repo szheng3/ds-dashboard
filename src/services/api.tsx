@@ -132,6 +132,6 @@ export async function getFakeCaptcha(mobile) {
 }
 
 export async function queryLog(params) {
-  return request(`/api/log?${params}`);
+  return request(`/api/admin/log?${params}`);
 }
 

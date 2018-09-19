@@ -66,6 +66,7 @@ export default [
           {
             path: 'logs',
             name: 'log',
+            authority: ['ROLE_ADMIN'], // only guest can access
             component: './Logs/Logs.tsx',
           },
           // {

@@ -1,4 +1,6 @@
 import { query as queryUsers, queryCurrent } from '@/services/user';
+import { setAuthority } from '../utils/authority';
+import { reloadAuthorized } from '../utils/Authorized';
 
 export default {
   namespace: 'user',
@@ -9,19 +11,24 @@ export default {
   },
 
   effects: {
-    *fetch(_, { call, put }) {
+    * fetch(_, { call, put }) {
       const response = yield call(queryUsers);
       yield put({
         type: 'save',
         payload: response,
       });
     },
-    *fetchCurrent(_, { call, put }) {
+    * fetchCurrent(_, { call, put }) {
       const response = yield call(queryCurrent);
-      yield put({
-        type: 'saveCurrentUser',
-        payload: response,
-      });
+      if (response) {
+        yield put({
+          type: 'saveCurrentUser',
+          payload: response,
+        });
+        setAuthority(response.userModel.role);
+        reloadAuthorized();
+      }
+
     },
   },
 

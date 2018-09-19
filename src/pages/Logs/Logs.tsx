@@ -25,13 +25,16 @@ enum ActionType {
   FETCH,
 }
 
+enum StateActionType {
+  MODALVISIAL,
+  TABCHANGE
+}
+
 interface IDSProps {
   dispatch: any
   loading: boolean
   logs: IMLogsState
 }
-
-const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
 @connect(({ logs, loading }) => ({
   logs,
@@ -150,6 +153,25 @@ export default class Logs extends Component<IDSProps, any> {
       ),
     },
   ];
+  stateAction = (nextState, stateAction: StateActionType) => {
+    const { flag, record, key } = nextState;
+
+    switch (stateAction) {
+      case StateActionType.MODALVISIAL:
+        this.setState({
+          updateModalVisible: !!flag,
+          stepFormValues: record || {},
+        });
+        break;
+      case StateActionType.TABCHANGE:
+        this.setState({
+          tabKey: key,
+        });
+      default:
+        break;
+    }
+
+  };
   handleUpdateModalVisible = (flag?, record?) => {
     this.setState({
       updateModalVisible: !!flag,
@@ -177,36 +199,22 @@ export default class Logs extends Component<IDSProps, any> {
     this.apiAction({ pageNum: 1, limit: 10 }, ActionType.FETCH);
   }
 
-  IpDetails = () => {
-    const { stepFormValues } = this.state;
-    const { ip } = stepFormValues;
-    console.log(ip);
-    return (
-      <DescriptionList size="small" title="地理详情"
-                       style={{ marginBottom: 32 }}>
-        <Description term="取货单号">{ip}</Description>
-        <Description term="状态">已取货</Description>
-        <Description term="销售单号">1234123421</Description>
-        <Description term="子订单">3214321432</Description>
-      </DescriptionList>
-    );
-
-  };
   _renderTab = (key) => {
     const { stepFormValues } = this.state;
     const { ip, country, city, subdivision, latitude, longitude, brower, date, duration, method, statusCode, os, uid, url } = stepFormValues as DSList;
     switch (key) {
       case 'ipDetails':
-
-        return (<DescriptionList size="small" title="IP详情"
-                                 style={{ marginBottom: 32 }}>
-          <Description term="IP">{ip}</Description>
-          <Description term="国家">{country}</Description>
-          <Description term="地区">{subdivision}</Description>
-          <Description term="城市">{city}</Description>
-          <Description term="经度">{latitude}</Description>
-          <Description term="纬度">{longitude}</Description>
-        </DescriptionList>);
+        return (
+          <DescriptionList size="small" title="IP详情"
+                           style={{ marginBottom: 32 }}>
+            <Description term="IP">{ip}</Description>
+            <Description term="国家">{country}</Description>
+            <Description term="地区">{subdivision}</Description>
+            <Description term="城市">{city}</Description>
+            <Description term="经度">{latitude}</Description>
+            <Description term="纬度">{longitude}</Description>
+          </DescriptionList>
+        );
       case 'requestDetails':
         return (
           <DescriptionList size="small" title="请求详情"
@@ -214,11 +222,17 @@ export default class Logs extends Component<IDSProps, any> {
             <Description term="游览器">{brower}</Description>
             <Description term="操作系统">{os}</Description>
             <Description term="时间">{moment(date).format('l')}</Description>
-            <Description term="长度">{duration} m</Description>
+            <Description term="响应">{duration} m</Description>
             <Description term="请求方法">{method}</Description>
             <Description term="状态码">{statusCode}</Description>
             <Description term="请求URL">{url}</Description>
           </DescriptionList>
+        );
+      case 'userDetails':
+        return (
+
+          <webview id={'foo'} src={'http://sszzz.me:8080/swagger-ui.html'}
+                   style={{ width: 640, height: 480 }}/>
         );
       default:
         break;
@@ -265,11 +279,9 @@ export default class Logs extends Component<IDSProps, any> {
           destroyOnClose
           title="日志详情"
           visible={updateModalVisible}
-          onOk={() => {
-            this.handleUpdateModalVisible();
-          }}
+          onOk={() => this.stateAction({}, StateActionType.MODALVISIAL)}
           // footer={this.renderFooter(currentStep)}
-          onCancel={() => this.handleUpdateModalVisible()}
+          onCancel={() => this.stateAction({}, StateActionType.MODALVISIAL)}
         >
           {/*<Steps style={{ marginBottom: 28 }} size="small" >*/}
           {/*<Step title="基本信息" />*/}
@@ -280,16 +292,13 @@ export default class Logs extends Component<IDSProps, any> {
           <Card
             tabList={[
               { key: 'ipDetails', tab: 'IP详情' },
-              { key: 'requestDetails', tab: '请求详情' }]}
+              { key: 'requestDetails', tab: '请求详情' },
+              { key: 'userDetails', tab: '用户详情' },
+            ]}
             defaultActiveTabKey={'ipDetails'}
             onTabChange={(key) => {
-
-              this.setState({
-                tabKey: key,
-              });
-
+              this.stateAction({ key }, StateActionType.TABCHANGE);
             }}
-
             bordered={false}
           >
             {
