@@ -1,4 +1,8 @@
-import { query as queryUsers, queryCurrent } from '@/services/user';
+import {
+  query as queryUsers,
+  queryCurrent,
+  queryEachCurrent,
+} from '@/services/user';
 import { setAuthority } from '../utils/authority';
 import { reloadAuthorized } from '../utils/Authorized';
 
@@ -8,6 +12,7 @@ export default {
   state: {
     list: [],
     currentUser: {},
+    eachUser: {},
   },
 
   effects: {
@@ -36,6 +41,16 @@ export default {
       }
 
     },
+    * fetchEachUser({ id }, { call, put }) {
+      const response = yield call(queryEachCurrent, id);
+      if (response) {
+        yield put({
+          type: 'saveEachUser',
+          payload: response,
+        });
+      }
+
+    },
   },
 
   reducers: {
@@ -49,6 +64,12 @@ export default {
       return {
         ...state,
         currentUser: action.payload || {},
+      };
+    },
+    saveEachUser(state, action) {
+      return {
+        ...state,
+        eachUser: action.payload || {},
       };
     },
     changeNotifyCount(state, action) {
