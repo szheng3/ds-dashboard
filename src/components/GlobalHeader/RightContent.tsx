@@ -6,7 +6,7 @@ import groupBy from 'lodash/groupBy';
 import NoticeIcon from '../NoticeIcon';
 import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
-import { currentUserResponse, UserModel } from '@/response/currentUser';
+import { UserResponse, UserModel } from '@/response/currentUser';
 import _ from 'lodash';
 
 export default class GlobalHeaderRight extends PureComponent<any, any> {

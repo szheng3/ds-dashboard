@@ -10,6 +10,7 @@ import DescriptionList from '@/components/DescriptionList';
 import { DSList, DSlog } from '@/response/logs';
 // import moment = require('moment');
 import moment from 'moment';
+import UserDetails from '@/components/UserDetails/UserDetails';
 
 /*
 const statusMap = ['default', 'processing', 'success', 'error'];
@@ -229,10 +230,12 @@ export default class Logs extends Component<IDSProps, any> {
           </DescriptionList>
         );
       case 'userDetails':
-        return (
 
-          <webview id={'foo'} src={'http://sszzz.me:8080/swagger-ui.html'}
-                   style={{ width: 640, height: 480 }}/>
+        return (
+          //
+          // <webview id={'foo'} src={'http://sszzz.me:8080/swagger-ui.html'}
+          //          style={{ width: 640, height: 480 }}/>
+          <UserDetails/>
         );
       default:
         break;

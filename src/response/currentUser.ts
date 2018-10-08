@@ -1,4 +1,4 @@
-export interface currentUserResponse {
+export interface UserResponse {
   status: number;
   userModel: UserModel;
 }

@@ -41,8 +41,8 @@ export default {
       }
 
     },
-    * fetchEachUser({ id }, { call, put }) {
-      const response = yield call(queryEachCurrent, id);
+    * fetchEachUser({ payload }, { call, put }) {
+      const response = yield call(queryEachCurrent, payload.id);
       if (response) {
         yield put({
           type: 'saveEachUser',
