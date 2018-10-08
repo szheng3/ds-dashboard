@@ -30,7 +30,7 @@ class UserDetails extends Component<IUserDetailsProps, any> {
   render() {
     const userModel: UserModel = _.get(this.props, 'user.eachUser.userModel',
       {});
-    const { nickname, details, phone } = userModel;
+    const { nickname, details, phone, role } = userModel;
     return (
       <DescriptionList size="small" title="用户详情"
                        style={{ marginBottom: 32 }}
@@ -38,6 +38,7 @@ class UserDetails extends Component<IUserDetailsProps, any> {
         <Description term="昵称">{nickname}</Description>
         <Description term="细节">{details}</Description>
         <Description term="手机">{phone}</Description>
+        <Description term="Role">{role}</Description>
 
       </DescriptionList>
 
